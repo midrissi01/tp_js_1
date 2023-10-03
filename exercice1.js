@@ -1,11 +1,11 @@
 "use strict";
-
+const etudiants = [
+  { id: 1, fname: "Ahmed", lname: "Amrani" },
+  { id: 2, fname: "Rachid", lname: "Karimi" },
+  { id: 3, fname: "Hajar", lname: "Tazi" },
+];
 function affichage() {
-  const etudiants = [
-    { id: 1, fname: "Ahmed", lname: "Amrani" },
-    { id: 2, fname: "Rachid", lname: "Karimi" },
-    { id: 3, fname: "Hajar", lname: "Tazi" },
-  ];
+  
   const tbody = document.getElementById("table-body");
   let data = "";
 
@@ -38,5 +38,26 @@ function modifyRow(id) {
     currentfName.textContent = newFirstName;
     currentLName.textContent = newLastName;
   }
+ 
+}
+function recherche(event){
+  event.preventDefault();
+  const val=document.getElementById("recherche_bar").value;
+  console.log(val);
+  const resultat= etudiants.filter(etudiant=>etudiant.fname === val || etudiant.lname === val );
+
+  const tbody = document.getElementById("table-body");
+  let data = "";
+
+  resultat.forEach((element) => {
+    data += `<tr class="row${element.id}"><td>${element.id}</td>
+         <td class="fName${element.id}">${element.fname}</td>
+         <td class="lName${element.id}">${element.lname}</td>
+         <td><button onclick=deleteRow(${element.id})>supprimer</button>
+         <button onclick=modifyRow(${element.id})>modifier</button></td>
+         </tr>`;
+  });
+
+  tbody.innerHTML = data;
 }
 
